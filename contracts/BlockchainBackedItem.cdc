@@ -42,6 +42,7 @@ pub contract BlockchainBackedItem: NonFungibleToken {
         }
     }
 
+    // NFT resource extended with the fields needed for Blockchain Backed Item
     pub resource NFT: NonFungibleToken.INFT, MetadataViews.Resolver {
         
         // base variables supported by NFTs
@@ -224,7 +225,7 @@ pub contract BlockchainBackedItem: NonFungibleToken {
         ) {
 
             // create a new NFT
-            var newNFT <- create NFT(
+            var blockchainBackedItem <- create NFT(
                 id: BlockchainBackedItem.totalSupply,
                 name: name,
                 description: description,
@@ -234,7 +235,7 @@ pub contract BlockchainBackedItem: NonFungibleToken {
             )
 
             // deposit it in the recipient's account using their reference
-            recipient.deposit(token: <-newNFT)
+            recipient.deposit(token: <-blockchainBackedItem)
 
             BlockchainBackedItem.totalSupply = BlockchainBackedItem.totalSupply + UInt64(1)
         }
